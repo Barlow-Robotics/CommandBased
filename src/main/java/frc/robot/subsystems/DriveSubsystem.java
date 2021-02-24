@@ -49,10 +49,10 @@ public class DriveSubsystem extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry; //couldn't find differentialdrive/odometry in og code
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(AHRS m_gyro) {
+  public DriveSubsystem() {
     // Sets the distance per pulse for the encoders
     leftBackSide.setInverted(false);
-    leftBackSide.setInverted(false);
+    leftFrontSide.setInverted(false);
     leftFrontSide.follow(leftBackSide);
     initializePIDConfig(leftBackSide);
 
@@ -69,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+        m_gyro.getRotation2d(), leftBackSide.getSelectedSensorPosition(), rightBackSide.getSelectedSensorPosition());
   }
 
   /**
@@ -87,7 +87,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(leftBackSide.getSelectedSensorVelocity(), rightBackSide.getSelectedSensorVelocity());
   }
 
   /**
@@ -124,8 +124,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+  //FIX!  leftBackSide.reset();
+    // rightBackSide.reset();
   }
 
   /**
@@ -134,7 +134,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+    return (leftBackSide.getSelectedSensorPosition() + rightBackSide.getSelectedSensorPosition()) / 2.0;
   }
 
   /**
@@ -142,18 +142,18 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public Encoder getLeftEncoder() {
-    return m_leftEncoder;
-  }
+ // public Encoder getLeftEncoder() {
+ //   return m_leftEncoder;
+  //}
 
   /**
    * Gets the right drive encoder.
    *
    * @return the right drive encoder
    */
-  public Encoder getRightEncoder() {
-    return m_rightEncoder;
-  }
+  // public Encoder getRightEncoder() {
+  //   return m_rightEncoder;
+  // }
 
   /**
    * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
@@ -188,7 +188,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   private void initializePIDConfig(WPI_TalonSRX talon){
-    talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.DriveConstants.mainFeedbackLoop, Constants.timeoutTime); //Encoder as feedback device, main PID loop, 30 ms timeout time
+    talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.DriveConstants.mainFeedbackLoop, Constants.DriveConstants.timeoutTime); //Encoder as feedback device, main PID loop, 30 ms timeout time
     talon.configClosedloopRamp(Constants.DriveConstants.closedVoltageRampingConstant);
     talon.configOpenloopRamp(Constants.DriveConstants.manualVoltageRampingConstant);
     talon.configNominalOutputForward(0);
