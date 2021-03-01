@@ -124,8 +124,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
-  //FIX!  leftBackSide.reset();
-    // rightBackSide.reset();
+    leftBackSide.setSelectedSensorPosition(0, 0, 0);
+    rightBackSide.setSelectedSensorPosition(0, 0, 0);
   }
 
   /**
