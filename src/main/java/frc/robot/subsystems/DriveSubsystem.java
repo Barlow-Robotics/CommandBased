@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.PhysicsSim;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -62,6 +63,9 @@ public class DriveSubsystem extends SubsystemBase {
     initializePIDConfig(rightBackSide);
     
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    if (RobotBase.isSimulation()){
+      simulationInit();
+    }
   }
 //stop here 02/19/21
 
@@ -201,6 +205,13 @@ public class DriveSubsystem extends SubsystemBase {
     talon.config_kP(Constants.DriveConstants.PID_id, Constants.DriveConstants.DrivetrainkP);
     talon.config_kI(Constants.DriveConstants.PID_id, 0);
     talon.config_kD(Constants.DriveConstants.PID_id, 0);
+  }
+
+  private void simulationInit() {
+      PhysicsSim.getInstance().addTalonSRX(rightFrontSide, 0.75, 4000, true);
+      PhysicsSim.getInstance().addTalonSRX(leftFrontSide, 0.75, 4000, true);
+      PhysicsSim.getInstance().addTalonSRX(rightBackSide, 0.75, 4000);
+      PhysicsSim.getInstance().addTalonSRX(leftBackSide, 0.75, 4000);
   }
 
 }
