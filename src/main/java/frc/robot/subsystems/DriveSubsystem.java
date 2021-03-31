@@ -112,7 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
-    System.out.println(rot);
+    System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
   }
 
   /**

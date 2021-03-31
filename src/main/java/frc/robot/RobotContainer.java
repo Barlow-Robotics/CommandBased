@@ -52,8 +52,11 @@ public class RobotContainer {
         new RunCommand( //new instance
             () ->      //lambda function, shorcut syntax for defining a function
                 m_robotDrive.arcadeDrive(
-                    m_driverController.getY(GenericHID.Hand.kLeft),
-                    m_driverController.getX(GenericHID.Hand.kRight)),
+              //      m_driverController.getY(GenericHID.Hand.kLeft),
+              //      m_driverController.getX(GenericHID.Hand.kRight)),
+             m_driverController.getRawAxis(1), //Left-side Y axis
+             m_driverController.getRawAxis(2)),   //Right-side X axis
+
             m_robotDrive));
   }
 
