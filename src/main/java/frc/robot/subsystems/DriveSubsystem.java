@@ -112,8 +112,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+    if (Math.abs(fwd) > 0.2 || Math.abs(rot) > 0.2) {
     System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
   }
+}
 
   /**
    * Controls the left and right sides of the drive directly with voltages.
