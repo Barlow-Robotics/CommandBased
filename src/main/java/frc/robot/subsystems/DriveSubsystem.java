@@ -41,7 +41,9 @@ public class DriveSubsystem extends SubsystemBase {
           rightBackSide = new WPI_TalonSRX(DriveConstants.ID_rightBackMotor));
 
   // The robot's drive
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+ // private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+
+  private final DifferentialDrive m_drive = new DifferentialDrive(leftFrontSide, rightFrontSide);
 
   // The gyro sensor
   private final Gyro m_gyro = new AHRS(SerialPort.Port.kUSB);
@@ -112,9 +114,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
-    if (Math.abs(fwd) > 0.2 || Math.abs(rot) > 0.2) {
-    System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
-  }
+  //    if (Math.abs(fwd) > 0.2 || Math.abs(rot) > 0.2) {
+  //    System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
+  //  }
 }
 
   /**

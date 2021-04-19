@@ -18,6 +18,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  
+  public Robot() {
+    super(0.05); // Periodic methods will now be called every 50 ms.
+  }
 
   /**
    * This function is run when the robot is first started up and should be used for any
