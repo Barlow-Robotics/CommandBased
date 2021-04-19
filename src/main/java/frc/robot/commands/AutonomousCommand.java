@@ -2,6 +2,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.PWMSpeedController;
+import frc.robot.Constants.DriveConstants;
 
 public class AutonomousCommand extends CommandBase{
 
@@ -30,8 +31,8 @@ public class AutonomousCommand extends CommandBase{
 
   @Override
   public boolean isFinished(){
-    double distance = (m_subsystem.getDistance()/8192.0)*8.0*Math.PI;
-    if (distance>=120.0){
+    double distance = (m_subsystem.getDistance()*DriveConstants.countsPerRevolution*DriveConstants.circumferenceOfWheel);
+    if (distance>=DriveConstants.distanceGoal){
         return true;
     }
     else {

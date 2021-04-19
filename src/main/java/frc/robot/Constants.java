@@ -21,6 +21,10 @@ public final class Constants {
     public static final int ID_rightFrontMotor = 3;
     public static final int ID_rightBackMotor = 4;
 
+    public static final double countsPerRevolution = 8192.0;
+    public static final double circumferenceOfWheel = 8.0*Math.PI;
+    public static final double distanceGoal = 120.0;
+
     public static final int[] kLeftEncoderPorts = new int[] {0, 1};
     public static final int[] kRightEncoderPorts = new int[] {2, 3};
     public static final boolean kLeftEncoderReversed = false;
