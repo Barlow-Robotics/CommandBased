@@ -218,4 +218,16 @@ public class DriveSubsystem extends SubsystemBase {
       PhysicsSim.getInstance().addTalonSRX(leftBackSide, 0.75, 4000);
   }
 
+  public double getDistance(){
+    double leftPos = leftFrontSide.getSelectedSensorPosition();
+    double rightPos = rightFrontSide.getSelectedSensorPosition();
+    double averagePos = (leftPos + rightPos)/2;
+    return averagePos;
+  }
+
+  public void resetDistance(){
+    leftFrontSide.setSelectedSensorPosition(0.0);
+    rightFrontSide.setSelectedSensorPosition(0.0);
+  }
+
 }

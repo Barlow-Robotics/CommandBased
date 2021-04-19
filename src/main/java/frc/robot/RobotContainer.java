@@ -39,6 +39,8 @@ public class RobotContainer {
   // The driver's controller
   Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort); //change
 
+  private final Command m_autoCommand = new (m_robotDrive);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -135,5 +137,6 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
+
   }
 }
