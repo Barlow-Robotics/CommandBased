@@ -39,5 +39,10 @@ public class AutonomousCommand extends CommandBase{
         return false;
     }
   }
-
+  // @Override
+  // public void cancel(){ 
+  //   // if (isFinished() == true){
+  //   //     end(m_autonomousCommand); 
+  //   // }
+  // }
 } 
