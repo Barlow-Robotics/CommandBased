@@ -56,13 +56,13 @@ public class DriveSubsystem extends SubsystemBase {
     // Sets the distance per pulse for the encoders
     leftBackSide.setInverted(false);
     leftFrontSide.setInverted(false);
-    leftFrontSide.follow(leftBackSide);
-    initializePIDConfig(leftBackSide);
+    leftBackSide.follow(leftFrontSide);
+    initializePIDConfig(leftFrontSide);
 
     rightBackSide.setInverted(true);
     rightFrontSide.setInverted(true);
-    rightFrontSide.follow(rightBackSide);
-    initializePIDConfig(rightBackSide);
+    rightBackSide.follow(rightFrontSide);
+    initializePIDConfig(rightFrontSide);
     
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
     if (RobotBase.isSimulation()){
@@ -114,6 +114,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+    if ( rot > 0.1) {
+      int wpk = 1;
+    }
   //    if (Math.abs(fwd) > 0.2 || Math.abs(rot) > 0.2) {
   //    System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
   //  }
