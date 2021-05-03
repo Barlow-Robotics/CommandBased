@@ -29,21 +29,21 @@ public class DriveSubsystem extends SubsystemBase {
   WPI_TalonSRX rightBackSide;
 
   // The motors on the left side of the drive.
-  private final SpeedControllerGroup m_leftMotors =
-      new SpeedControllerGroup(
-         leftFrontSide = new WPI_TalonSRX(DriveConstants.ID_leftFrontMotor),
-         leftBackSide = new WPI_TalonSRX(DriveConstants.ID_leftBackMotor));
+  //private final SpeedControllerGroup m_leftMotors =
+  //    new SpeedControllerGroup(
+  //       leftFrontSide = new WPI_TalonSRX(DriveConstants.ID_leftFrontMotor),
+  //       leftBackSide = new WPI_TalonSRX(DriveConstants.ID_leftBackMotor));
 
   // The motors on the right side of the drive.
-  private final SpeedControllerGroup m_rightMotors =
-      new SpeedControllerGroup(
-          rightFrontSide = new WPI_TalonSRX(DriveConstants.ID_rightFrontMotor),
-          rightBackSide = new WPI_TalonSRX(DriveConstants.ID_rightBackMotor));
+  // private final SpeedControllerGroup m_rightMotors =
+  //     new SpeedControllerGroup(
+  //         rightFrontSide = new WPI_TalonSRX(DriveConstants.ID_rightFrontMotor),
+  //         rightBackSide = new WPI_TalonSRX(DriveConstants.ID_rightBackMotor));
 
   // The robot's drive
  // private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-  private final DifferentialDrive m_drive = new DifferentialDrive(leftFrontSide, rightFrontSide);
+  private  DifferentialDrive m_drive ; // = new DifferentialDrive(leftFrontSide, rightFrontSide);
 
   // The gyro sensor
   private final Gyro m_gyro = new AHRS(SerialPort.Port.kUSB);
@@ -54,15 +54,28 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     // Sets the distance per pulse for the encoders
+
+    leftFrontSide = new WPI_TalonSRX(DriveConstants.ID_leftFrontMotor) ;
+    leftBackSide = new WPI_TalonSRX(DriveConstants.ID_leftBackMotor) ;
+    rightFrontSide = new WPI_TalonSRX(DriveConstants.ID_rightFrontMotor);
+    rightBackSide = new WPI_TalonSRX(DriveConstants.ID_rightBackMotor); 
+
+    m_drive = new DifferentialDrive(leftFrontSide, rightFrontSide);
+
+    leftFrontSide.configFactoryDefault() ;
+    leftBackSide.configFactoryDefault() ;
+    rightFrontSide.configFactoryDefault() ;
+    rightBackSide.configFactoryDefault() ;
+
     leftBackSide.setInverted(false);
     leftFrontSide.setInverted(false);
     leftBackSide.follow(leftFrontSide);
-    initializePIDConfig(leftFrontSide);
+    //initializePIDConfig(leftFrontSide);
 
-    rightBackSide.setInverted(true);
-    rightFrontSide.setInverted(true);
+    rightBackSide.setInverted(false);
+    rightFrontSide.setInverted(false);
     rightBackSide.follow(rightFrontSide);
-    initializePIDConfig(rightFrontSide);
+    //initializePIDConfig(rightFrontSide);
     
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
     if (RobotBase.isSimulation()){
@@ -115,7 +128,8 @@ public class DriveSubsystem extends SubsystemBase {
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
     if ( rot > 0.1) {
-      int wpk = 1;
+      // int wpk = 1;
+     // System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
     }
   //    if (Math.abs(fwd) > 0.2 || Math.abs(rot) > 0.2) {
   //    System.out.printf("fwd= %6.4f, rot= %6.4f %n", fwd, rot);
@@ -128,11 +142,11 @@ public class DriveSubsystem extends SubsystemBase {
    * @param leftVolts the commanded left output
    * @param rightVolts the commanded right output
    */
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(-rightVolts);
-    m_drive.feed();
-  }
+  //public void tankDriveVolts(double leftVolts, double rightVolts) {
+  //  m_leftMotors.setVoltage(leftVolts);
+  //  m_rightMotors.setVoltage(-rightVolts);
+  //  m_drive.feed();
+  //}
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {

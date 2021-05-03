@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
   public static final class DriveConstants {
-    public static final int ID_leftFrontMotor = 2;
-    public static final int ID_leftBackMotor = 1;
-    public static final int ID_rightFrontMotor = 3;
-    public static final int ID_rightBackMotor = 4;
+    public static final int ID_leftFrontMotor = 1;
+    public static final int ID_leftBackMotor = 10;
+    public static final int ID_rightFrontMotor = 2;
+    public static final int ID_rightBackMotor = 20;
 
     public static final double countsPerRevolution = 8192.0;
     public static final double circumferenceOfWheel = 8.0*Math.PI;
